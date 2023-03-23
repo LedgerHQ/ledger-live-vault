@@ -31,6 +31,14 @@ if (getEnv("DEVICE_PROXY_URL")) {
     open: () => retry(() => Tr.create(3000, 5000)),
     disconnect: () => Promise.resolve(),
   });
+} else if (getEnv("DEVICE_VAULT_URL")) {
+  const VaultTransport = TransportHttp(getEnv("DEVICE_VAULT_URL"));
+
+  registerTransportModule({
+    id: "vault-transport",
+    open: () => retry(() => VaultTransport.create(3000, 5000)),
+    disconnect: () => Promise.resolve(),
+  });
 } else {
   registerTransportModule({
     id: "hid",
