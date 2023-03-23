@@ -276,6 +276,11 @@ const envDefinitions: Record<
     parser: stringParser,
     desc: "enable a proxy to use instead of a physical device",
   },
+  DEVICE_VAULT_URL: {
+    def: "",
+    parser: stringParser,
+    desc: "enable vault as signer",
+  },
   DEVICE_PROXY_MODEL: {
     def: "nanoS",
     parser: stringParser,
