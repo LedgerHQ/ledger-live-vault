@@ -201,6 +201,7 @@ export interface AccountBridge<T extends TransactionCommon> {
   // finalizing a transaction by signing it with the ledger device
   // This results of a "signed" event with a signedOperation
   // than can be locally saved and later broadcasted
+  buildRawTx?: ({ account, transaction }: any) => Promise<any>;
   signOperation: SignOperationFnSignature<T>;
   // broadcasting a signed transaction to network
   // returns an optimistic Operation that this transaction is likely to create in the future

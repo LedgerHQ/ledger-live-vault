@@ -2,7 +2,7 @@ import createTransaction from "../js-createTransaction";
 import estimateMaxSpendable from "../js-estimateMaxSpendable";
 import getTransactionStatus from "../js-getTransactionStatus";
 import prepareTransaction from "../js-prepareTransaction";
-import signOperation from "../js-signOperation";
+import signOperation, { buildRawTx } from "../js-signOperation";
 import { sync, scanAccounts } from "../js-synchronisation";
 import updateTransaction from "../js-updateTransaction";
 import type { CosmosValidatorItem, Transaction } from "../types";
@@ -69,6 +69,7 @@ const accountBridge: AccountBridge<Transaction> = {
   sync,
   receive,
   signOperation,
+  buildRawTx,
   assignFromAccountRaw,
   assignToAccountRaw,
   applyReconciliation,
