@@ -4,6 +4,7 @@ import { handleActions } from "redux-actions";
 import { getEnv } from "@ledgerhq/live-common/env";
 import type { Device } from "@ledgerhq/live-common/hw/actions/types";
 import { DeviceModelId } from "@ledgerhq/devices";
+import type { SettingsState } from "./settings";
 
 export type DevicesState = {
   currentDevice: ?Device,
@@ -43,8 +44,18 @@ const handlers: Object = {
   }),
 };
 
-export function getCurrentDevice(state: { devices: DevicesState }) {
-  if (getEnv("DEVICE_PROXY_URL") || getEnv("MOCK") || getEnv("DEVICE_VAULT_URL")) {
+export function getCurrentDevice(state: { devices: DevicesState, settings: SettingsState }) {
+  const isVaultSigner =
+    state.settings.vaultSigner.enabled &&
+    state.settings.vaultSigner.workspace !== "" &&
+    state.settings.vaultSigner.host !== "" &&
+    state.settings.vaultSigner.token !== "";
+
+  if (isVaultSigner) {
+    return { deviceId: "vault-transport", wired: true, modelId: DeviceModelId.nanoS };
+  }
+
+  if (getEnv("DEVICE_PROXY_URL") || getEnv("MOCK")) {
     // bypass the listen devices (we should remove modelId here by instead get it at open time if needed)
     return { deviceId: "", wired: true, modelId: DeviceModelId.nanoS };
   }

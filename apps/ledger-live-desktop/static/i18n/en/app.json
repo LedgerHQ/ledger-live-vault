@@ -637,6 +637,21 @@
   "postOnboardingDebugger": {
     "buttonTitle": "Test"
   },
+  "vaultSigner": {
+    "modal": {
+      "title": "Connect Vault account",
+      "host": {
+        "title": "Endpoint"
+      },
+      "workspace": {
+        "title": "Workspace"
+      },
+      "token": {
+        "title": "Token"
+      },
+      "submit": "Connect"
+    }
+  },
   "fullNode": {
     "status": "Status",
     "connect": "Connect",
@@ -3928,6 +3943,10 @@
           "title": "Deactivate EIP1559 minimum priority fee gate",
           "description": "This will allow a transaction to be sent without any minimum priority fee expected. This may result in a transaction getting stuck in the mempool forever."
         },
+        "vaultSigner": {
+          "title": "Vault Signer",
+          "description": "User Ledger Vault as a signer with your API token"
+        },
         "1559CustomPriorityLowerGate": {
           "title": "Custom priority fee gate",
           "description": "Customize the percentage of our estimated minimal priority fee allowed for an advanced EIP1559 transaction"
@@ -4074,7 +4093,7 @@
       "tr": "Turkish",
       "ja": "Japanese",
       "ko": "Korean",
-      "pt" : "Português (Brasil)"
+      "pt": "Português (Brasil)"
     }
   },
   "theme": {

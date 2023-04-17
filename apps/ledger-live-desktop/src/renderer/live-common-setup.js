@@ -5,6 +5,7 @@ import { setSecp256k1Instance } from "@ledgerhq/live-common/families/bitcoin/wal
 import { retry } from "@ledgerhq/live-common/promise";
 import { getUserId } from "~/helpers/user";
 import { setEnvOnAllThreads } from "./../helpers/env";
+import TransportHttp from "@ledgerhq/hw-transport-http";
 import { IPCTransport } from "./IPCTransport";
 import { command } from "./commands";
 
@@ -13,6 +14,7 @@ setEnvOnAllThreads("USER_ID", getUserId());
 registerTransportModule({
   id: "ipc",
   open: id => {
+    if (id !== "ipc") return;
     // Should we return the transport if already open or return an error ?
     return retry(() => IPCTransport.open(id));
   },

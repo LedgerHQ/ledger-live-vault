@@ -8,7 +8,7 @@ import type { PortfolioRange } from "@ledgerhq/live-common/portfolio/v2/types";
 import type { Currency } from "@ledgerhq/types-cryptoassets";
 import type { DeviceModelInfo, FeatureId, Feature } from "@ledgerhq/types-live";
 import { setEnvOnAllThreads } from "~/helpers/env";
-import type { SettingsState as Settings } from "~/renderer/reducers/settings";
+import type { SettingsState as Settings, VaultSigner } from "~/renderer/reducers/settings";
 import {
   hideEmptyTokenAccountsSelector,
   filterTokenOperationsZeroAmountSelector,
@@ -274,4 +274,9 @@ export const setOverriddenFeatureFlags = (overriddenFeatureFlags: {
 export const setFeatureFlagsButtonVisible = (featureFlagsButtonVisible: boolean) => ({
   type: "SET_FEATURE_FLAGS_BUTTON_VISIBLE",
   payload: { featureFlagsButtonVisible },
+});
+
+export const setVaultSigner = (payload: VaultSigner) => ({
+  type: "SET_VAULT_SIGNER",
+  payload,
 });

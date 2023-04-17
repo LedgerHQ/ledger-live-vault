@@ -6,6 +6,7 @@ import { Redirect, Route, Switch, useLocation, useHistory } from "react-router-d
 import { useSelector } from "react-redux";
 import { FeatureToggle } from "@ledgerhq/live-common/featureFlags/index";
 import TrackAppStart from "~/renderer/components/TrackAppStart";
+import VaultSignerTransport from "~/renderer/components/VaultSignerTransport";
 import { BridgeSyncProvider } from "~/renderer/bridge/BridgeSyncContext";
 import { SyncNewAccounts } from "~/renderer/bridge/SyncNewAccounts";
 import Dashboard from "~/renderer/screens/dashboard";
@@ -172,6 +173,7 @@ export default function Default() {
       <TriggerAppReady />
       <ExportLogsButton hookToShortcut />
       <TrackAppStart />
+      <VaultSignerTransport />
       <Idler />
       {process.platform === "darwin" ? <AppRegionDrag /> : null}
 

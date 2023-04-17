@@ -61,6 +61,12 @@ export const timeRangeDaysByKey = {
 };
 
 export type LangAndRegion = { language: string, region: ?string, useSystem: boolean };
+export type VaultSigner = {
+  enabled: boolean,
+  host: string,
+  workspace: string,
+  token: string,
+};
 export type SettingsState = {
   loaded: boolean, // is the settings loaded from db (it not we don't save them)
   hasCompletedOnboarding: boolean,
@@ -130,6 +136,8 @@ export type SettingsState = {
   starredMarketCoins: string[],
   overriddenFeatureFlags: { [key: FeatureId]: Feature },
   featureFlagsButtonVisible: boolean,
+  // Vault
+  vaultSigner: VaultSigner,
 };
 
 const defaultsForCurrency: Currency => CurrencySettings = crypto => {
@@ -210,6 +218,9 @@ const INITIAL_STATE: SettingsState = {
   starredMarketCoins: [],
   overriddenFeatureFlags: {},
   featureFlagsButtonVisible: false,
+
+  // Vault
+  vaultSigner: { enabled: false, host: "", token: "" },
 };
 
 const pairHash = (from, to) => `${from.ticker}_${to.ticker}`;
@@ -405,6 +416,10 @@ const handlers: Object = {
   SET_FEATURE_FLAGS_BUTTON_VISIBLE: (state: SettingsState, { payload }) => ({
     ...state,
     featureFlagsButtonVisible: payload.featureFlagsButtonVisible,
+  }),
+  SET_VAULT_SIGNER: (state: SettingsState, { payload }) => ({
+    ...state,
+    vaultSigner: payload,
   }),
 };
 
@@ -631,5 +646,7 @@ export const overriddenFeatureFlagsSelector = (state: State) =>
 
 export const featureFlagsButtonVisibleSelector = (state: State) =>
   state.settings.featureFlagsButtonVisible;
+
+export const vaultSignerSelector = (state: State) => state.settings.vaultSigner;
 
 export default handleActions(handlers, INITIAL_STATE);
