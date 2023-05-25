@@ -21,19 +21,28 @@ export default class VaultTransport extends WebSocketTransport {
   async exchange(apdu: Buffer): Promise<Buffer> {
     const hex = apdu.toString("hex");
     log("apdu", "=> " + hex);
-    const res: Buffer = await new Promise((resolve, reject) => {
-      this.hook.rejectExchange = (e: any) => reject(e);
 
-      this.hook.resolveExchange = (b: Buffer) => resolve(b);
-      const data = {
-        workspace: this.data?.workspace,
-        token: this.data?.token,
-        apdu: hex,
-      };
+    const iv = setInterval(() => {
+      this.hook.send("ping");
+    }, 30e3);
 
-      this.hook.send(JSON.stringify(data));
-    });
-    log("apdu", "<= " + res.toString("hex"));
-    return res;
+    try {
+      const res: Buffer = await new Promise((resolve, reject) => {
+        this.hook.rejectExchange = (e: any) => reject(e);
+
+        this.hook.resolveExchange = (b: Buffer) => resolve(b);
+        const data = {
+          workspace: this.data?.workspace,
+          token: this.data?.token,
+          apdu: hex,
+        };
+
+        this.hook.send(JSON.stringify(data));
+      });
+      log("apdu", "<= " + res.toString("hex"));
+      return res;
+    } finally {
+      clearInterval(iv);
+    }
   }
 }
